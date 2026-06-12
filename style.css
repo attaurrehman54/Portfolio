@@ -103,15 +103,13 @@ section {
 
 /* Hero */
 .hero {
-    height: 100vh;
+    min-height: 100vh;  /* 'height' ki jagah 'min-height' kar diya */
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-top: 120px; /* Taa ke navbar ke peeche na chhupe */
+    padding-bottom: 50px;
 }
-.greeting { color: var(--accent-color); margin-bottom: 20px; font-family: monospace;}
-.hero h1 { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin-bottom: 10px;}
-.subtitle { font-size: clamp(30px, 6vw, 60px); color: var(--text-secondary); margin-bottom: 20px;}
-.summary { max-width: 500px; font-size: 1.2rem; }
 
 /* About & Skills */
 .about-grid {
