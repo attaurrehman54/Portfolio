@@ -4,6 +4,7 @@
     --text-primary: #ccd6f6;
     --text-secondary: #8892b0;
     --accent-color: #64ffda;
+    --nav-mobile-bg: #050c17; /* Extra color for mobile menu background */
     --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
@@ -16,12 +17,14 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     line-height: 1.6;
+    width: 100%;
 }
 
 /* Typography & Utilities */
@@ -73,13 +76,14 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 5%;
+    padding: 0 5%;
     background-color: rgba(10, 25, 47, 0.85);
     backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
+    height: 80px; /* Fixed height for navbar */
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 .logo {
     color: var(--accent-color);
@@ -101,40 +105,90 @@ section {
     color: var(--accent-color);
 }
 
+/* Updated: Hamburger Styling */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+.line {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-primary);
+    margin: 5px;
+    transition: var(--transition);
+}
+
 /* Hero */
 .hero {
-    min-height: 100vh;  /* 'height' ki jagah 'min-height' kar diya */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 120px; /* Taa ke navbar ke peeche na chhupe */
+    padding-top: 120px;
     padding-bottom: 50px;
 }
 
-/* About & Skills */
+/* About Grid */
 .about-grid {
     display: grid;
     grid-template-columns: 3fr 2fr;
     gap: 50px;
+    align-items: start;
+}
+.about-image img {
+    box-shadow: 0 10px 30px -10px rgba(2,12,27,0.7);
+}
+
+/* --- Professional Skills Section Styling (with Icons) --- */
+.skills-container {
+    margin-top: 40px;
+}
+.skills-main-title {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--surface-color);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+.skills-category {
+    margin-bottom: 25px;
+}
+.skills-category h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    font-weight: 600;
 }
 .skills-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 12px;
 }
 .skills-tags span {
     background-color: var(--surface-color);
-    color: var(--accent-color);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    color: var(--text-primary);
+    padding: 10px 18px;
+    border-radius: 4px; /* Professional sharp corners */
+    font-size: 0.95rem;
     font-family: monospace;
+    border: 1px solid transparent;
     transition: var(--transition);
+    cursor: default;
+    
+    /* Code to align Icon and Text nicely */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; 
+}
+.skills-tags span i {
+    font-size: 1.3rem; /* Icon size */
 }
 .skills-tags span:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    background-color: rgba(100, 255, 218, 0.05);
 }
 
 /* Resume Timeline */
@@ -171,6 +225,11 @@ section {
     padding: 30px;
     transition: var(--transition);
 }
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
 .project-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
@@ -201,9 +260,55 @@ footer { text-align: center; padding: 20px; font-family: monospace; font-size: 0
     transform: translateY(0);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; } /* Add hamburger menu logic here for mobile */
+/* Responsive and Updated Cross Platform CSS */
+@media (max-width: 1000px) {
     section { padding: 80px 5%; }
+    .about-grid { gap: 30px; }
+    .hero-content h1 { font-size: 3rem; }
+    .subtitle { font-size: 1.8rem; }
+}
+
+@media (max-width: 768px) {
+    section { padding: 60px 5%; }
+    .about-grid { grid-template-columns: 1fr; text-align: center; }
+    .about-image { margin-bottom: 30px; }
+    .skills-container { margin-top: 30px; justify-items: center; }
+    .skills-category h4 { text-align: center; } /* Centers Category Title on mobile */
+    .skills-tags { justify-content: center; }
+    
+    .section-title { font-size: 1.7rem; justify-content: center;}
+    .section-title::after { width: 100px; }
+
+    /* Show Hamburger */
+    .hamburger { display: block; z-index: 1001; }
+
+    /* Convert nav-links into full screen menu */
+    .nav-links {
+        position: fixed;
+        right: 0px;
+        height: 100vh;
+        top: 0px;
+        background-color: var(--nav-mobile-bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70%;
+        padding: 100px 0;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in-out;
+        z-index: 1000;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .nav-links li a { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px;}
+
+    /* Hamburger Animation to 'X' when open */
+    .toggle .line:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+    .toggle .line:nth-child(2) { opacity: 0; }
+    .toggle .line:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+}
+
+/* Helper class triggered by JS to open the menu */
+.nav-links-active {
+    transform: translateX(0%) !important;
 }
